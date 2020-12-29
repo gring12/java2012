@@ -1,6 +1,6 @@
 package com.swcodingschool.hello;
 /* 
- * Varialble :
+ * Variable (변수) :
  * A variable provides us with named storage that our programs can manipulate. 
  * Each variable in Java has a specific type, which determines the size and 
  * layout of the variable's memory; the range of values that can be stored 
@@ -26,7 +26,7 @@ package com.swcodingschool.hello;
  *   double : 64-bit. 0.0d
  *   boolean : one bit of information
  *   
- * 2. Reference Datatypes
+ * 2. Reference/Object Datatypes
  *    Reference variables are created using defined constructors of the classes. 
  *    They are used to access objects.
  * 
