@@ -5,6 +5,7 @@ import java.util.Scanner;
 /*
  * First Java Program, HelloWorld
  * JDK, eclipse 설치 및 configuration 후 첫 프로그램 동작 확인
+ * 이다인
  */
 public class HelloWorld {
 
