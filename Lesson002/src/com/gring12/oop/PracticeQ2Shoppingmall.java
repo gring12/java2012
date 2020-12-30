@@ -24,6 +24,6 @@ public class PracticeQ2Shoppingmall {
 		System.out.println("주문 상품 번호 : " + Order.numberOfProduct);
 		System.out.println("배송 주소 : " + Order.address);
 			
-	}
+	}// end of main
 
-}
+}// end of class
