@@ -3,14 +3,14 @@ package com.gring12.oop;
 public class PracticeQ1Person {
 	int age;
 	String name;
-	char isMarried;
+	boolean isMarried;
 	int kidnum;
 
 	public static void main(String[] args) {
 		PracticeQ1Person person1 = new PracticeQ1Person();
 		person1.age = 40;
 		person1.name = "James";
-		person1.isMarried = 'T';
+		person1.isMarried = true;
 		person1.kidnum = 3;
 
 		System.out.println("<출력 결과>");
