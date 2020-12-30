@@ -15,6 +15,6 @@ public class PracticeQ1 {
 			}
 			System.out.println( );
 		}// for end
-	}
+	}// end of main
 
-}
+}// end of class
