@@ -16,4 +16,4 @@ public class PracticeQ2 {
 		}// for end
 	}// end of main
 
-}
+}// end of class
