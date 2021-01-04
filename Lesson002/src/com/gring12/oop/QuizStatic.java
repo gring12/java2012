@@ -7,7 +7,25 @@ package com.gring12.oop;
  * 매장 : 손님카운트, 돈
  */
 public class QuizStatic {
+	
+	public static void main(String[] args) {
+		QuizStaticStore store1 = QuizStaticStore.getInstance();
+		QuizStaticStore store2 = QuizStaticStore.getInstance();
+		System.out.println(store1);
+		System.out.println(store2);
+		QuizStaticGuest guest123 = new QuizStaticGuest(123, 10000);
+		QuizStaticGuest guest456 = new QuizStaticGuest(456, 20000);
 		
-	QuizStaticGuest guest123 = new QuizStaticGuest(123, 10000);
-	QuizStaticGuest guest456 = new QuizStaticGuest(456, 20000);
+		//구입 전
+		guest123.showInfo();
+		guest456.showInfo();
+		
+		//구입
+		guest123.buy(store1, 1000);
+		guest456.buy(store2, 2000);
+		
+		//구입 후
+		guest123.showInfo();
+		guest456.showInfo();
+	}
 }

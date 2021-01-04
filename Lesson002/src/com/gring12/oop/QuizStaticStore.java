@@ -5,15 +5,15 @@ public class QuizStaticStore {
 	// 단계 1. private으로 생성자 선언
 	// 단계 2. private static 으로 인스턴스 생성
 	// 단계 3. public으로 인스턴에 접근할 수 있는 메서드
-	public int guestCount;
-	public int money;
+	public int guestCount; // 손님 수
+	public int money; 	   // 돈
 	//단계 2
 	private static QuizStaticStore instance = new QuizStaticStore();
 	//단계 1
 	private QuizStaticStore() {
 		
 	}
-	// step 3.
+			// step 3.
 	public static QuizStaticStore getInstance() {
 		if(instance == null ) {
 			instance = new QuizStaticStore();

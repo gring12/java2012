@@ -9,12 +9,12 @@ public class QuizStaticGuest {
 		this.money = money;
 	}
 	
-	public void buy(QuizStaticStore store) {
+	public void buy(QuizStaticStore store, int money) {
 		store.buy(1000);
 		this.money -= 1000;
 	}
 	
-	public void showInfo( ) {
+	public void showInfo() {
 		System.out.println(guestID + "의 현재 잔액은 " + money + "입니다.");
 	}
 	
