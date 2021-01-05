@@ -57,7 +57,7 @@ public class Scoring {
 			}
 			System.out.println();
 		}
-		
+		sc.close();
 	}// end of main
 
 }// end of class
