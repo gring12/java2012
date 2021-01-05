@@ -8,9 +8,9 @@ public class PracticeC5Q4 {
 	private boolean isValid = true;
 	
 	public PracticeC5Q4(int day, int month, int year) {
-		setYear(year);
-		setMonth(month);
-		setDay(day);
+		this.year = year;
+		this.month = month;
+		this.day = day;
 	}
 	
 	public int getDay() {
@@ -38,4 +38,5 @@ public class PracticeC5Q4 {
 		this.year = year;
 	}	
 	
+		
 }// end of class
