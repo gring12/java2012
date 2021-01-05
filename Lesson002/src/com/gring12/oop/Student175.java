@@ -29,6 +29,11 @@ public class Student175 {
 		bus.takeoff();
 	}// end of takeoffBus()
 	
+	public void takeTaxi(Taxi taxi) {
+		taxi.take(10000);
+		this.money -=10000;
+	}
+	
 	public void showInfo( ) {
 		System.out.println(studentID + "번 학생 " + studentName + "님의 남은 돈은 " + money + "입니다.");
 	}// end of showInfo()
