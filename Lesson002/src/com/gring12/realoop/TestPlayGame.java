@@ -7,9 +7,11 @@ public class TestPlayGame {
 		player.play(1);
 		
 		TestAdvanced aLevel = new TestAdvanced();
+		player.upgradeLevel(aLevel);
 		player.play(2);
 		
 		TestSuper sLevel = new TestSuper();
+		player.upgradeLevel(sLevel);
 		player.play(3);
 	}
 
