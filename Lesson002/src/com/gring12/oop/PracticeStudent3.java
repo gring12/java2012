@@ -15,7 +15,6 @@ public class PracticeStudent3 {
 	}
 
 	public static int getSerialNum() {
-		int i = 10; // i 값을 10으로 초기화 해주는 이유???
 		return serialNum;
 	}
 
