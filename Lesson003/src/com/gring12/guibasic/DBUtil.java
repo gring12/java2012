@@ -9,7 +9,7 @@ import java.sql.SQLException;
  */
 public class DBUtil {
 	static final String JDBCDRV = "com.mysql.cj.jdbc.Driver";
-	static final String URL = "jdbc:mysql//localhost:3306/javadb";
+	static final String URL = "jdbc:mysql://localhost:3306/javadb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 	static final String DBUSER = "java";
 	static final String DBPASSWD = "1234";
 	
