@@ -61,22 +61,22 @@ public class Login extends JFrame {
 		lblNewLabel.setBounds(106, 10, 221, 43);
 		contentPane.add(lblNewLabel);
 
-		JLabel lblNewLabel_1 = new JLabel("USER ID");
-		lblNewLabel_1.setBounds(59, 92, 57, 15);
+		JLabel lblNewLabel_1 = new JLabel("USER NAME");
+		lblNewLabel_1.setBounds(81, 87, 72, 15);
 		contentPane.add(lblNewLabel_1);
 
 		JLabel lblNewLabel_2 = new JLabel("PASSWORD");
-		lblNewLabel_2.setBounds(59, 139, 72, 15);
+		lblNewLabel_2.setBounds(81, 129, 72, 15);
 		contentPane.add(lblNewLabel_2);
 
 		txtUserID = new JTextField();
-		txtUserID.setBounds(163, 89, 164, 21);
+		txtUserID.setBounds(185, 84, 164, 21);
 		contentPane.add(txtUserID);
 		txtUserID.setColumns(20);
 
 		txtUserPWD = new JPasswordField();
 		txtUserPWD.setColumns(45);
-		txtUserPWD.setBounds(163, 136, 164, 21);
+		txtUserPWD.setBounds(185, 126, 164, 21);
 		contentPane.add(txtUserPWD);
 
 		JButton btnLogin = new JButton("Login");
@@ -86,10 +86,10 @@ public class Login extends JFrame {
 				if (DBUtil.dbconn == null)
 					DBUtil.DBConnect();
 				// 입력된 유저 아이디와 비밀번호를 가져온다.
-				String userid = txtUserID.getText();
-				String userpwd = txtUserPWD.getText();
+				String username = txtUserID.getText();
+				String userpwd = new String(txtUserPWD.getPassword());
 				// 입력된 아이디와 비번 확인
-//				System.out.println(userid);
+//				System.out.println(username);
 //				System.out.println(userpwd);
 
 				// 유저아이디와 비밀번호를 사용하여 데이터베이스 조회
@@ -97,12 +97,12 @@ public class Login extends JFrame {
 				 * SELECT 속성리스트[* all, 모든 속성] FROM 테이블이름 WHERE 조건
 				 */
 				// sql 구문 구성
-				String sql = "SELECT * FROM tbluser WHERE userid=? AND userpwd=?";
+				String sql = "SELECT * FROM tbluser WHERE username=? AND userpwd=?";
 
 				try {
 					// 유저 아이디와 비밀번호를 사용하여 이 유저 아이디와 비밀번호로 DB 연결 시도
 					PreparedStatement pstmt = DBUtil.dbconn.prepareStatement(sql);
-					pstmt.setString(1, userid); // userid 변수값으로 sql구문의 첫번째 ? 에 대입
+					pstmt.setString(1, username); // username 변수값으로 sql구문의 첫번째 ? 에 대입
 					pstmt.setString(2, userpwd);// userpwd 변수값으로 sql구문의 두번째 ? 에 대입
 
 					// 최종 완성된 질의구문을 실행하고 그 결과를 ResultSet으로 받아온다.
@@ -126,7 +126,18 @@ public class Login extends JFrame {
 				}
 			}
 		});
-		btnLogin.setBounds(168, 195, 97, 23);
+		btnLogin.setBounds(230, 195, 97, 23);
 		contentPane.add(btnLogin);
+		
+		JButton btnJoin = new JButton("Join");
+		btnJoin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose(); // 창 닫고
+				Join join = new Join(); // 새 창 객체 생성
+				join.setVisible(true); // 새 창 객체 보이도록
+			}
+		});
+		btnJoin.setBounds(106, 195, 97, 23);
+		contentPane.add(btnJoin);
 	}
 }
