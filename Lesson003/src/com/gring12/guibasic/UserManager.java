@@ -10,7 +10,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class AppHome extends JFrame {
+public class UserManager extends JFrame {
 
 	private JPanel contentPane;
 
@@ -21,7 +21,7 @@ public class AppHome extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AppHome frame = new AppHome();
+					UserManager frame = new UserManager();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -33,10 +33,10 @@ public class AppHome extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AppHome() {
-		setTitle("Application Home");
+	public UserManager() {
+		setTitle("User Manager");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 510);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -45,13 +45,12 @@ public class AppHome extends JFrame {
 		JButton btnExit = new JButton("Exit");
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// DB가 연결되어진 상태라면, 연결을 종료
-				if(DBUtil.dbconn != null) DBUtil.DBClose();
-				dispose(); // 윈도우 창을 닫는 메서드
-				System.exit(0); // 전체 프로그램을 정상적으로 종료
+				dispose();
+				Login login = new Login();
+				login.setVisible(true);
 			}
 		});
-		btnExit.setBounds(306, 207, 97, 23);
+		btnExit.setBounds(290, 425, 97, 23);
 		contentPane.add(btnExit);
 	}
 }

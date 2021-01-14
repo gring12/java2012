@@ -115,8 +115,13 @@ public class Login extends JFrame {
 						// System.out.println("로그인성공");
 						// 로그인 창을 닫고, 어플리케이션의 홈으로 이동
 						dispose();
-						AppHome apphome = new AppHome(); // 새 프레임 생성
-						apphome.setVisible(true); // 프레임이 보이도록 한다.
+						if(username.equals("admin")) {
+							UserManager usermanager = new UserManager();
+							usermanager.setVisible(true);
+						} else {
+							BookInfo bookinfo = new BookInfo(); // 새 프레임 생성
+							bookinfo.setVisible(true); // 프레임이 보이도록 한다.
+						}
 					} else {// 해당 계정이 없음
 						System.out.println("아이디와 비번을 다시 확인해주세요.");
 					}

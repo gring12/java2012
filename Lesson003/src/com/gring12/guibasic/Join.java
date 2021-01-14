@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JRadioButton;
@@ -14,6 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.ButtonGroup;
 
@@ -40,9 +44,6 @@ public class Join extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					if (DBUtil.dbconn == null)
-						DBUtil.DBConnect();
-					
 					Join frame = new Join();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -58,38 +59,38 @@ public class Join extends JFrame {
 	public Join() {
 		setTitle("Join Member");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 400, 450);
+		setBounds(100, 100, 356, 386);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblNewLabel = new JLabel("Join as New Member");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 20));
-		lblNewLabel.setBounds(69, 22, 246, 37);
+		lblNewLabel.setBounds(57, 35, 226, 37);
 		contentPane.add(lblNewLabel);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("User Name");
-		lblNewLabel_1.setBounds(68, 89, 70, 15);
+		lblNewLabel_1.setBounds(12, 107, 85, 15);
 		contentPane.add(lblNewLabel_1);
-		
+
 		JLabel lblNewLabel_1_1 = new JLabel("Password");
-		lblNewLabel_1_1.setBounds(69, 137, 70, 15);
+		lblNewLabel_1_1.setBounds(12, 140, 85, 15);
 		contentPane.add(lblNewLabel_1_1);
-		
-		JLabel lblNewLabel_1_2 = new JLabel("Confirm");
-		lblNewLabel_1_2.setBounds(69, 186, 70, 15);
-		contentPane.add(lblNewLabel_1_2);
-		
-		JLabel lblNewLabel_1_3 = new JLabel("Gender");
-		lblNewLabel_1_3.setBounds(69, 229, 70, 15);
-		contentPane.add(lblNewLabel_1_3);
-		
-		JLabel lblNewLabel_1_4 = new JLabel("Address");
-		lblNewLabel_1_4.setBounds(69, 273, 70, 15);
-		contentPane.add(lblNewLabel_1_4);
-		
+
+		JLabel lblNewLabel_1_1_1 = new JLabel("Confirm");
+		lblNewLabel_1_1_1.setBounds(12, 176, 85, 15);
+		contentPane.add(lblNewLabel_1_1_1);
+
+		JLabel lblNewLabel_1_1_1_1 = new JLabel("Gender");
+		lblNewLabel_1_1_1_1.setBounds(12, 215, 85, 15);
+		contentPane.add(lblNewLabel_1_1_1_1);
+
+		JLabel lblNewLabel_2 = new JLabel("Address");
+		lblNewLabel_2.setBounds(12, 253, 85, 15);
+		contentPane.add(lblNewLabel_2);
+
 		JRadioButton rdoMale = new JRadioButton("Male");
 		rdoMale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -97,9 +98,9 @@ public class Join extends JFrame {
 			}
 		});
 		buttonGroup.add(rdoMale);
-		rdoMale.setBounds(166, 225, 64, 23);
+		rdoMale.setBounds(111, 211, 62, 23);
 		contentPane.add(rdoMale);
-		
+
 		JRadioButton rdoFemale = new JRadioButton("Female");
 		rdoFemale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -107,78 +108,89 @@ public class Join extends JFrame {
 			}
 		});
 		buttonGroup.add(rdoFemale);
-		rdoFemale.setBounds(246, 225, 83, 23);
+		rdoFemale.setBounds(194, 211, 85, 23);
 		contentPane.add(rdoFemale);
-		
+
 		txtUserName = new JTextField();
-		txtUserName.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				getContentPane().add(txtUserName);
-			}
-		});
-		txtUserName.setBounds(165, 86, 150, 21);
+		txtUserName.setBounds(101, 104, 226, 21);
 		contentPane.add(txtUserName);
 		txtUserName.setColumns(10);
-		
+
 		txtPWD = new JPasswordField();
-		txtPWD.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				getContentPane().add(txtPWD);
-			}
-		});
-		txtPWD.setBounds(165, 134, 150, 21);
+		txtPWD.setBounds(101, 137, 226, 21);
 		contentPane.add(txtPWD);
-		
+
 		txtConfirm = new JPasswordField();
-		txtConfirm.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				getContentPane().add(txtConfirm);
-			}
-		});
-		txtConfirm.setBounds(166, 183, 150, 21);
+		txtConfirm.setBounds(101, 173, 226, 21);
 		contentPane.add(txtConfirm);
-		
+
 		txtAddr = new JTextField();
-		txtAddr.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			add(txtAddr);
-			}
-		});
-		txtAddr.setBounds(166, 270, 150, 21);
+		txtAddr.setBounds(101, 250, 226, 21);
 		contentPane.add(txtAddr);
 		txtAddr.setColumns(10);
-		
+
 		JButton btnReset = new JButton("Reset");
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// UI의 입력 요소들을 Reset
+				// UI 입력 요소들을 reset
 				txtUserName.setText("");
 				txtPWD.setText("");
 				txtConfirm.setText("");
-//				rdoMale.setSeleted(false);				
-//				rdoFemale.setSeleted(false);				
-				buttonGroup.clearSelection();
+				buttonGroup.clearSelection();  // 라디오버튼 그룹 리셋
 				txtAddr.setText("");
 			}
 		});
-		btnReset.setBounds(69, 336, 97, 23);
+		btnReset.setBounds(101, 306, 97, 23);
 		contentPane.add(btnReset);
-		
+
 		JButton btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// 입력된 데이터값을 DB에 저장
-				if (DBUtil.dbconn == null)
-					DBUtil.DBConnect();
-				
-				String username = txtUserName.getText();
+				// 입력된 데이터 값을 db에 저장하는 과정
+				// 데이터베이스 연결
+				if (DBUtil.dbconn == null) DBUtil.DBConnect();
+				// 입력된 값을 임시 변수로 변환
+				username = txtUserName.getText();
+				addr = txtAddr.getText();
+				// 비밀번호 일치 여부 확인
 				String userpwd = new String(txtPWD.getPassword());
-				String addr = txtAddr.getText();
-				
-				String sql = "SELECT * FROM tbluser WHERE username=? AND userpwd=? AND gender=? AND addr=?";
+				String confirm = new String(txtConfirm.getPassword());
+//				System.out.println(userpwd);
+//				System.out.println(confirm);
+				if (!userpwd.equals(confirm)){
+					txtPWD.setText("");
+					txtConfirm.setText("");
+					JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다.");
+				} else {
+					// 입력된 값으로 sql구문 완성
+					String sql = "INSERT INTO tbluser(username, userpwd, gender, addr) VALUES(?,?,?,?)";
+
+					try {
+						// prepared statement는 sql 구문을 좀더 단순하게 구성할 수 있도록 한다.
+						PreparedStatement pstmt = DBUtil.dbconn.prepareStatement(sql);
+						pstmt.setString(1, username); // userid 변수값으로 sql구문의 첫번째 ? 에 대입
+						pstmt.setString(2, userpwd);// userpwd 변수값으로 sql구문의 두번째 ? 에 대입
+						pstmt.setString(3, gender);
+						pstmt.setString(4, addr);
+
+						// update()문을 실행하면 영향 받은 레크드의 갯수를 반환한다.
+						int rs = pstmt.executeUpdate();
+						if (rs == 1) {
+							JOptionPane.showMessageDialog(null, "정상적으로 저장하였습니다.");
+							// 현재 창을 닫고 로그인 창으로 이동
+							dispose();
+							Login login = new Login();
+							login.setVisible(true);
+						}
+
+					} catch (SQLException esave) {
+						System.out.println("[MyMSG]SQL Exception Error : " + esave.getMessage());
+						esave.printStackTrace();
+					}
+				}//end of else
 			}
 		});
-		btnSave.setBounds(200, 336, 97, 23);
+		btnSave.setBounds(208, 306, 97, 23);
 		contentPane.add(btnSave);
 	}
 }
