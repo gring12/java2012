@@ -35,7 +35,7 @@ public class LoginAuthor extends JFrame {
 				try {
 					if (DBUtil.dbconn == null)
 						DBUtil.DBConnect();
-					
+
 					LoginAuthor frame = new LoginAuthor();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -56,58 +56,58 @@ public class LoginAuthor extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblNewLabel = new JLabel("Author Management System");
 		lblNewLabel.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		lblNewLabel.setFont(new Font("굴림", Font.PLAIN, 16));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(92, 23, 249, 42);
 		contentPane.add(lblNewLabel);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("USER NAME");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(71, 103, 95, 25);
 		contentPane.add(lblNewLabel_1);
-		
+
 		JLabel lblNewLabel_1_1 = new JLabel("PASSWORD");
 		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_1.setBounds(71, 158, 95, 25);
 		contentPane.add(lblNewLabel_1_1);
-		
+
 		txtUserName = new JTextField();
 		txtUserName.setBounds(178, 103, 175, 25);
 		contentPane.add(txtUserName);
 		txtUserName.setColumns(10);
-		
+
 		txtUserPWD = new JTextField();
 		txtUserPWD.setColumns(10);
 		txtUserPWD.setBounds(178, 158, 175, 25);
 		contentPane.add(txtUserPWD);
-		
+
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (DBUtil.dbconn == null)
 					DBUtil.DBConnect();
-				
+
 				String username = txtUserName.getText();
 				String userpwd = txtUserPWD.getText();
-				
+
 				String sql = "SELECT * FROM tblmanagement WHERE username=? AND userpwd=?";
-				
+
 				try {
 					PreparedStatement pstmt = DBUtil.dbconn.prepareStatement(sql);
 					pstmt.setString(1, username);
 					pstmt.setString(2, userpwd);
-					
+
 					ResultSet rs = pstmt.executeQuery();
-					
-					if (rs.next()) { 
+
+					if (rs.next()) {
 						rs.close();
 						pstmt.close();
-						
+
 						dispose();
-						if(username.equals("admin")) {
+						if (username.equals("admin")) {
 							AuthorInfo authorinfo = new AuthorInfo();
 							authorinfo.setVisible(true);
 						} else {
@@ -116,7 +116,7 @@ public class LoginAuthor extends JFrame {
 					} else {
 						System.out.println("아이디와 비번을 다시 확인해주세요.");
 					}
-				} catch (SQLException elogin) { //오류,에러 등의 예외 발생 시 처리 
+				} catch (SQLException elogin) { // 오류,에러 등의 예외 발생 시 처리
 					System.out.println("Error : " + elogin.getMessage());
 					elogin.printStackTrace();
 				}
