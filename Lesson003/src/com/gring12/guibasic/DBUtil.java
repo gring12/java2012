@@ -37,6 +37,7 @@ public class DBUtil {
 		try {
 			System.out.println("[MyMSG] 데이터베이스 연결을 정상적으로 종료합니다.");
 			dbconn.close();
+			dbconn=null; // close 후에 null 값을 가짐으로써 다시 connection이 이루어지게
 		} catch (SQLException e) {
 			System.out.println("[MyMSG] 데이터베이스 연결을 종료하지 못하였습니다.");
 			e.printStackTrace();

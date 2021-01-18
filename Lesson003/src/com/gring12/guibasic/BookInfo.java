@@ -34,9 +34,9 @@ public class BookInfo extends JFrame {
 	private JTable tblBook;
 	private JTextField txtTitle;
 	private JTextField txtAuthor;
-	private JTextField txtPublisherID;
+	private JTextField txtPublisherName;
 	private JTextField txtPrice;
-	private JButton btnExit;
+	private JButton btnLogout;
 	private JButton btnReset;
 	private JButton btnSave;
 	private JButton btnUpdate;
@@ -81,17 +81,20 @@ public class BookInfo extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		btnExit = new JButton("Exit");
-		btnExit.addActionListener(new ActionListener() {
+		btnLogout = new JButton("Logout");
+		btnLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// DB가 연결되어진 상태라면, 연결을 종료
-				if(DBUtil.dbconn != null) DBUtil.DBClose();
-				dispose(); // 윈도우 창을 닫는 메서드
-				System.exit(0); // 전체 프로그램을 정상적으로 종료
+				// DB가 연결되어진 상태라면, 연결을 종료하고 다시 로그인창으로 이동
+				if (DBUtil.dbconn != null) {
+					DBUtil.DBClose();
+				}
+				dispose();
+				Login login = new Login();
+				login.setVisible(true);
 			}
 		});
-		btnExit.setBounds(497, 436, 85, 25);
-		contentPane.add(btnExit);
+		btnLogout.setBounds(497, 436, 85, 25);
+		contentPane.add(btnLogout);
 		
 		lblNewLabel = new JLabel("도서정보관리시스템");
 		lblNewLabel.setBorder(new LineBorder(Color.DARK_GRAY, 2));
@@ -101,10 +104,45 @@ public class BookInfo extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		btnReset = new JButton("Reset");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtTitle.setText("");
+				txtAuthor.setText("");
+				txtPublisherName.setText("");
+				txtPrice.setText("");
+				
+				btnSave.setEnabled(true);
+				btnUpdate.setEnabled(false);
+				btnDelete.setEnabled(false);
+			}
+		});
 		btnReset.setBounds(12, 436, 85, 25);
 		contentPane.add(btnReset);
 		
 		btnSave = new JButton("Save");
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String sql = "INSERT INTO tblbook(title, authour, publisherID, price) VALUES(?, ?, ?, ?)";
+				String title = txtTitle.getText();
+				String author = txtAuthor.getText();
+				String publisherID = txtPublisherName.getText();
+				String price = txtPrice.getText();
+				
+				try {
+					PreparedStatement pstmt = DBUtil.dbconn.prepareStatement(sql);
+					pstmt.setString(1, title);
+					pstmt.setString(2, author);
+					pstmt.setInt(3, Integer.parseInt(publisherID));
+					pstmt.setInt(4, Integer.parseInt(price));
+					
+					pstmt.execute();
+					LoadTbl();
+				} catch(SQLException esave){
+					JOptionPane.showMessageDialog(null, "저장 오류가 발생하였습니다.");
+					esave.printStackTrace();
+				}
+			}
+		});	
 		btnSave.setBounds(109, 436, 85, 25);
 		contentPane.add(btnSave);
 		
@@ -115,7 +153,7 @@ public class BookInfo extends JFrame {
 				String sql = "UPDATE tblbook SET title=?, author=?, publisherID =?, price=? WHERE bookid=?";
 				String title = txtTitle.getText();
 				String author = txtAuthor.getText();
-				String publisherID = txtPublisherID.getText();
+				String publisherID = txtPublisherName.getText();
 				String price = txtPrice.getText();
 				
 				try {
@@ -129,7 +167,7 @@ public class BookInfo extends JFrame {
 					pstmt.execute();
 					LoadTbl();
 				} catch(SQLException eupdate){
-					JOptionPane.showMessageDialog(null, "해당 레코드 업데이트 오류");
+					JOptionPane.showMessageDialog(null, "업데이트 오류가 발생하였습니다.");
 					eupdate.printStackTrace();
 				}
 			}
@@ -138,6 +176,22 @@ public class BookInfo extends JFrame {
 		contentPane.add(btnUpdate);
 		
 		btnDelete = new JButton("Delete");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//delete 버튼을 클릭하였을 때
+				String sql = "DELETE FROM tblbook WHERE bookid = ?";
+				try {
+					PreparedStatement pstmt = DBUtil.dbconn.prepareStatement(sql);
+					pstmt.setInt(1, bookid4update);
+					
+					pstmt.execute();
+					LoadTbl();
+				}catch(SQLException eupdate) {
+					JOptionPane.showMessageDialog(null, "삭제 오류가 발생하였습니다.");
+					//eupdate.printStackTrace();
+				}// end of try catch
+			}
+		});
 		btnDelete.setBounds(303, 436, 85, 25);
 		contentPane.add(btnDelete);
 		
@@ -199,10 +253,10 @@ public class BookInfo extends JFrame {
 		lblNewLabel_1_2.setBounds(22, 181, 57, 15);
 		panel.add(lblNewLabel_1_2);
 		
-		txtPublisherID = new JTextField();
-		txtPublisherID.setColumns(10);
-		txtPublisherID.setBounds(78, 178, 172, 21);
-		panel.add(txtPublisherID);
+		txtPublisherName = new JTextField();
+		txtPublisherName.setColumns(10);
+		txtPublisherName.setBounds(78, 178, 172, 21);
+		panel.add(txtPublisherName);
 		
 		JLabel lblNewLabel_1_3 = new JLabel("정  가");
 		lblNewLabel_1_3.setHorizontalAlignment(SwingConstants.LEFT);
@@ -225,7 +279,7 @@ public class BookInfo extends JFrame {
 		
 		//데이터베이스 연결이 안되어 있으면 연결
 		if(DBUtil.dbconn == null) DBUtil.DBConnect();
-		String sql = "SELECT * FROM tblbook";
+		String sql = "SELECT b.bookid, b.title, b.author, p.name, b.price FROM tblbook as b INNER JOIN tblpublisher as p ON b.publisherid = p.publisherid";
 		
 		try {
 			PreparedStatement pstmt = DBUtil.dbconn.prepareStatement(sql);
@@ -235,7 +289,7 @@ public class BookInfo extends JFrame {
 						rs.getInt(1),    // bookid
 						rs.getString(2), // title
 						rs.getString(3), // author
-						rs.getString(4), // publisher
+						rs.getString(4), // tblpublisher.name
 						rs.getInt(5)     // price
 				});
 			}//end of while
@@ -245,9 +299,9 @@ public class BookInfo extends JFrame {
 			tblBook.setModel(model);
 			tblBook.setAutoResizeMode(0);
 			tblBook.getColumnModel().getColumn(0).setPreferredWidth(30); //bookid
-			tblBook.getColumnModel().getColumn(1).setPreferredWidth(150);//title
+			tblBook.getColumnModel().getColumn(1).setPreferredWidth(120);//title
 			tblBook.getColumnModel().getColumn(2).setPreferredWidth(80); //author
-			tblBook.getColumnModel().getColumn(3).setPreferredWidth(50); //publisher
+			tblBook.getColumnModel().getColumn(3).setPreferredWidth(80); //publisher
 			tblBook.getColumnModel().getColumn(4).setPreferredWidth(50); //price
 			
 			JOptionPane.showMessageDialog(null, "테이블을 로딩하였습니다.");
@@ -261,7 +315,7 @@ public class BookInfo extends JFrame {
 	}// end of LoadTbl()
 	
 	private void setTxtField(int id) {
-		String sql= "SELECT * FROM tblBook WHERE bookid=?";
+		String sql= "SELECT b.bookid, b.title, b.author, p.name, b.price FROM tblbook as b INNER JOIN tblpublisher as p ON b.publisherid = p.publisherid WHERE bookid=?";
 		
 		try {
 			PreparedStatement pstmt = DBUtil.dbconn.prepareStatement(sql);
@@ -270,7 +324,7 @@ public class BookInfo extends JFrame {
 			while(rs.next()) {
 					txtTitle.setText(rs.getString(2));    // title
 					txtAuthor.setText(rs.getString(3)); // author
-					txtPublisherID.setText(String.valueOf(rs.getInt(4))); // publisher,  int로 불러온 값을 String 타입으로 변환해서 불러오기
+					txtPublisherName.setText(rs.getString(4)); // publisher
 					txtPrice.setText(String.valueOf(rs.getInt(5)));     // price
 		}//end of while
 			
