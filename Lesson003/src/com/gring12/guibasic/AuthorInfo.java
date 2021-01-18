@@ -31,11 +31,10 @@ public class AuthorInfo extends JFrame {
 	private JTextField txtAuthorName;
 	private JTextField txtAuthorAddr;
 	private JTextField txtAuthorPhone;
-	private JTable table;
 	private JTable tblAuthor;
-	private JTable tblAuthor_1;
-	private JTextField txtEmployee;
 	private JTextField txtEmployeeName;
+	DefaultTableModel model;
+	private int authorupdate;
 
 	/**
 	 * Launch the application.
@@ -60,7 +59,7 @@ public class AuthorInfo extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-				LoadTbl();
+				LoadTbl(); // 창이 열리면 테이블 로드
 			}
 		});
 		
@@ -140,13 +139,14 @@ public class AuthorInfo extends JFrame {
 					pstmt.setString(3, phone);
 					
 					pstmt.execute();
-					
+					LoadTbl();
 				}catch (SQLException eupdate){
+					JOptionPane.showMessageDialog(null, "업데이트 오류 발생");
 					eupdate.printStackTrace();
 				}
 			}
 		});
-		btnUpdate.setBounds(157, 383, 97, 23);
+		btnUpdate.setBounds(115, 383, 97, 23);
 		contentPane.add(btnUpdate);
 		
 		JButton btnSave = new JButton("Save");
@@ -164,12 +164,14 @@ public class AuthorInfo extends JFrame {
 					pstmt.setString(3, phone);
 					
 					pstmt.execute();
+					LoadTbl();
 				} catch (SQLException esave) {
+					JOptionPane.showMessageDialog(null, "저장 오류 발생");
 					esave.printStackTrace();
 				}
 			}
 		});
-		btnSave.setBounds(411, 382, 95, 25);
+		btnSave.setBounds(222, 382, 95, 25);
 		contentPane.add(btnSave);
 		
 		JButton btnNew = new JButton("New");
@@ -178,13 +180,14 @@ public class AuthorInfo extends JFrame {
 				txtAuthorName.setText("");
 				txtAuthorAddr.setText("");
 				txtAuthorPhone.setText("");
+				txtEmployeeName.setText("");
 			}
 		});
-		btnNew.setBounds(31, 382, 95, 25);
+		btnNew.setBounds(10, 382, 95, 25);
 		contentPane.add(btnNew);
 		
 		JButton btnReload = new JButton("Reload");
-		btnReload.setBounds(285, 382, 95, 25);
+		btnReload.setBounds(327, 382, 95, 25);
 		contentPane.add(btnReload);
 		
 		tblAuthor = new JTable();
@@ -204,6 +207,39 @@ public class AuthorInfo extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 0, 2, 2);
 		contentPane.add(scrollPane);
+		
+		JButton btnDelete = new JButton("Delete");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String sql = "DELETE FROM tblauthor WHERE authorid=?";
+				try {
+					PreparedStatement pstmt = DBUtil.dbconn.prepareStatement(sql);
+					pstmt.setInt(1, authorupdate);
+					
+					pstmt.execute();
+					LoadTbl();
+				} catch (SQLException edelete) {
+					JOptionPane.showMessageDialog(null, "삭제 오류 발생");
+					edelete.printStackTrace();
+				}
+			}
+		});
+		btnDelete.setBounds(432, 382, 95, 25);
+		contentPane.add(btnDelete);
+		
+		JButton btnLogout = new JButton("Logout");
+		btnLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (DBUtil.dbconn != null) {
+					DBUtil.DBClose();
+				}
+				dispose();
+				LoginAuthor loginauthor = new LoginAuthor();
+				loginauthor.setVisible(true);
+			}
+		});
+		btnLogout.setBounds(415, 448, 95, 25);
+		contentPane.add(btnLogout);
 		
 	}//AuthorInfo() end
 		
@@ -262,5 +298,4 @@ public class AuthorInfo extends JFrame {
 					eset.printStackTrace();
 				}
 			}
-
 }// end of class
