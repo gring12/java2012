@@ -265,7 +265,7 @@ public class AuthorInfo extends JFrame {
 
 		if (DBUtil.dbconn == null)
 			DBUtil.DBConnect();
-		String sql = "SELECT a.authorid, a.name, a.address, a.phone, e.name FROM tblauthor as a INNER JOIN tblemployee as e ON a.employeeid = e.employeeid";
+		String sql = "SELECT a.authorid, a.name, a.address, a.phone, e.name FROM tblauthor as a INNER JOIN tblemployee as e ON a.employeeid = e.employeeid ORDER BY a.authorid ASC";
 
 		try {
 			PreparedStatement pstmt = DBUtil.dbconn.prepareStatement(sql);
