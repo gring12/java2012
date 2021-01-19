@@ -19,12 +19,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
 public class LoginAuthor extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtUserName;
-	private JTextField txtUserPWD;
+	private JPasswordField txtUserPWD;
+	private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
@@ -79,10 +81,10 @@ public class LoginAuthor extends JFrame {
 		contentPane.add(txtUserName);
 		txtUserName.setColumns(10);
 
-		txtUserPWD = new JTextField();
-		txtUserPWD.setColumns(10);
+		txtUserPWD = new JPasswordField();
 		txtUserPWD.setBounds(178, 158, 175, 25);
 		contentPane.add(txtUserPWD);
+		txtUserPWD.setColumns(10);
 
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
@@ -91,7 +93,7 @@ public class LoginAuthor extends JFrame {
 					DBUtil.DBConnect();
 
 				String username = txtUserName.getText();
-				String userpwd = txtUserPWD.getText();
+				String userpwd = new String(txtUserPWD.getPassword());
 
 				String sql = "SELECT * FROM tblmanagement WHERE username=? AND userpwd=?";
 
@@ -124,5 +126,7 @@ public class LoginAuthor extends JFrame {
 		});
 		btnLogin.setBounds(302, 214, 97, 23);
 		contentPane.add(btnLogin);
+		
+		
 	}
 }

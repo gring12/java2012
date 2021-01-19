@@ -141,16 +141,19 @@ public class AuthorInfo extends JFrame {
 		JButton btnUpdate = new JButton("Update");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String sql = "UPDATE tblauthor SET name=?, address=?, phone=? WHERE authorid=?";
+				String sql = "UPDATE tblauthor SET name=?, address=?, phone=?, employeeid=? WHERE authorid=?";
 				String name = txtAuthorName.getText();
 				String address = txtAuthorAddr.getText();
 				String phone = txtAuthorPhone.getText();
+				String employeeid = txtEmployeeName.getText();
 
 				try {
 					PreparedStatement pstmt = DBUtil.dbconn.prepareStatement(sql);
 					pstmt.setString(1, name);
 					pstmt.setString(2, address);
 					pstmt.setString(3, phone);
+					pstmt.setString(4, employeeid);
+					pstmt.setInt(5, authorupdate);
 
 					pstmt.execute();
 					LoadTbl();
@@ -166,16 +169,18 @@ public class AuthorInfo extends JFrame {
 		JButton btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String sql = "INSERT INTO tblauthor(name, address, phone) VALUES (?,?,?)";
+				String sql = "INSERT INTO tblauthor(name, address, phone, employeeid) VALUES (?,?,?,?)";
 				String name = txtAuthorName.getText();
 				String address = txtAuthorAddr.getText();
 				String phone = txtAuthorPhone.getText();
+				String employeeid = txtEmployeeName.getText();
 
 				try {
 					PreparedStatement pstmt = DBUtil.dbconn.prepareStatement(sql);
 					pstmt.setString(1, name);
 					pstmt.setString(2, address);
 					pstmt.setString(3, phone);
+					pstmt.setString(4, employeeid);
 
 					pstmt.execute();
 					LoadTbl();
@@ -221,6 +226,11 @@ public class AuthorInfo extends JFrame {
 
 					pstmt.execute();
 					LoadTbl();
+					
+					txtAuthorName.setText("");
+					txtAuthorAddr.setText("");
+					txtAuthorPhone.setText("");
+					txtEmployeeName.setText("");
 				} catch (SQLException edelete) {
 					JOptionPane.showMessageDialog(null, "삭제 오류 발생");
 					edelete.printStackTrace();
@@ -256,16 +266,18 @@ public class AuthorInfo extends JFrame {
 
 		if (DBUtil.dbconn == null)
 			DBUtil.DBConnect();
-		String sql = "SELECT a.name, a.address, a.phone, e.name FROM tblauthor as a INNER JOIN tblemployee as e ON a.employeeid = e.employeeid";
+		String sql = "SELECT a.authorid, a.name, a.address, a.phone, e.name FROM tblauthor as a INNER JOIN tblemployee as e ON a.employeeid = e.employeeid";
 
 		try {
 			PreparedStatement pstmt = DBUtil.dbconn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				model.addRow(new Object[] { rs.getString(1), // authorname
-						rs.getString(2), // authoraddr
-						rs.getString(3), // authorphone
-						rs.getString(4), // employeename
+				model.addRow(new Object[] {
+						rs.getInt(1),    //authorid 
+						rs.getString(2), // authorname
+						rs.getString(3), // authoraddr
+						rs.getString(4), // authorphone
+						rs.getString(5) // employeename
 				});
 			} // end of while
 			rs.close();
@@ -273,12 +285,15 @@ public class AuthorInfo extends JFrame {
 
 			tblAuthor.setModel(model);
 			tblAuthor.setAutoResizeMode(0);
-			tblAuthor.getColumnModel().getColumn(0).setPreferredWidth(80); // a.name
-			tblAuthor.getColumnModel().getColumn(1).setPreferredWidth(100);// a.addr
-			tblAuthor.getColumnModel().getColumn(2).setPreferredWidth(100); // a.phone
-			tblAuthor.getColumnModel().getColumn(3).setPreferredWidth(80); // e.name
+			tblAuthor.getColumnModel().getColumn(0).setPreferredWidth(30); // a.id
+			tblAuthor.getColumnModel().getColumn(1).setPreferredWidth(70);// a.name
+			tblAuthor.getColumnModel().getColumn(2).setPreferredWidth(100); // a.addr
+			tblAuthor.getColumnModel().getColumn(3).setPreferredWidth(120); // a.phone
+			tblAuthor.getColumnModel().getColumn(4).setPreferredWidth(70); // e.name
+			
 
 		} catch (SQLException eload) {
+			JOptionPane.showMessageDialog(null, "테이블 로딩 오류");
 			eload.printStackTrace();
 		}
 
@@ -298,6 +313,7 @@ public class AuthorInfo extends JFrame {
 				txtEmployeeName.setText(rs.getString(5));
 			}
 		} catch (SQLException eset) {
+			JOptionPane.showMessageDialog(null, "해당 레코드 조회 오류");
 			eset.printStackTrace();
 		}
 	}// end of setTxtField()
