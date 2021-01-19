@@ -124,7 +124,6 @@ public class AuthorInfo extends JFrame {
 		txtEmployeeName.setBounds(84, 186, 120, 20);
 		panel.add(txtEmployeeName);
 		txtEmployeeName.setColumns(10);
-		txtEmployeeName.setColumns(10);
 
 		JButton btnNew = new JButton("New");
 		btnNew.addActionListener(new ActionListener() {
@@ -293,7 +292,7 @@ public class AuthorInfo extends JFrame {
 			
 
 		} catch (SQLException eload) {
-			JOptionPane.showMessageDialog(null, "테이블 로딩 오류");
+			JOptionPane.showMessageDialog(null, "테이블 로딩 오류 발생");
 			eload.printStackTrace();
 		}
 
@@ -313,7 +312,7 @@ public class AuthorInfo extends JFrame {
 				txtEmployeeName.setText(rs.getString(5));
 			}
 		} catch (SQLException eset) {
-			JOptionPane.showMessageDialog(null, "해당 레코드 조회 오류");
+			JOptionPane.showMessageDialog(null, "해당 레코드 조회 오류 발생");
 			eset.printStackTrace();
 		}
 	}// end of setTxtField()
