@@ -18,6 +18,9 @@ import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
@@ -26,6 +29,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import javax.swing.JComboBox;
 
 public class AuthorInfo extends JFrame {
 
@@ -33,10 +37,12 @@ public class AuthorInfo extends JFrame {
 	private JTextField txtAuthorName;
 	private JTextField txtAuthorAddr;
 	private JTextField txtAuthorPhone;
-	private JTextField txtEmployeeName;
+	// private JTextField txtEmployeeName;
 	private JTable tblAuthor;
 	DefaultTableModel model;
 	private int authorupdate;
+	private JComboBox cmbEmployeeName;
+	private Map<Integer, String> mapub;
 
 	/**
 	 * Launch the application.
@@ -120,10 +126,29 @@ public class AuthorInfo extends JFrame {
 		lblNewLabel_4.setBounds(12, 186, 60, 20);
 		panel.add(lblNewLabel_4);
 
-		txtEmployeeName = new JTextField();
-		txtEmployeeName.setBounds(84, 186, 120, 20);
-		panel.add(txtEmployeeName);
-		txtEmployeeName.setColumns(10);
+//		txtEmployeeName = new JTextField();
+//		txtEmployeeName.setBounds(84, 186, 120, 20);
+//		panel.add(txtEmployeeName);
+//		txtEmployeeName.setColumns(10);
+		
+		cmbEmployeeName = new JComboBox();
+		//tblauthor에서 콤보박스값 가져오기
+		// cmbList 채우기용 메서드 호출 - 해쉬맵 구성
+		fillList();
+		Set<Integer> ids=mapub.keySet();
+		//콤보리스트 구성
+		for(int id:ids) {
+			cmbEmployeeName.addItem(mapub.get(id));
+		}
+		cmbEmployeeName.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		cmbEmployeeName.setBounds(84, 186, 120, 20);
+		panel.add(cmbEmployeeName);
+		
+		
 
 		JButton btnNew = new JButton("New");
 		btnNew.addActionListener(new ActionListener() {
@@ -131,7 +156,9 @@ public class AuthorInfo extends JFrame {
 				txtAuthorName.setText("");
 				txtAuthorAddr.setText("");
 				txtAuthorPhone.setText("");
-				txtEmployeeName.setText("");
+				//txtEmployeeName.setText("");
+				// new 버튼 누를 때, employeeid가 1인 사람으로 reset 되게 하기
+				cmbEmployeeName.setSelectedIndex(0);
 			}
 		});
 		btnNew.setBounds(10, 382, 95, 25);
@@ -144,14 +171,19 @@ public class AuthorInfo extends JFrame {
 				String name = txtAuthorName.getText();
 				String address = txtAuthorAddr.getText();
 				String phone = txtAuthorPhone.getText();
-				String employeeid = txtEmployeeName.getText();
+				//String employeeid = txtEmployeeName.getText();
+				//콤보박스에서 담당자 아이디 뽑아내기
+				int tmpid = cmbEmployeeName.getSelectedIndex();
+				Integer keys[] = mapub.keySet().toArray(new Integer[0]);
+				String employeeid = keys[tmpid].toString();
 
 				try {
 					PreparedStatement pstmt = DBUtil.dbconn.prepareStatement(sql);
 					pstmt.setString(1, name);
 					pstmt.setString(2, address);
 					pstmt.setString(3, phone);
-					pstmt.setString(4, employeeid);
+					//pstmt.setString(4, employeeid);
+					pstmt.setInt(4, Integer.parseInt(employeeid));
 					pstmt.setInt(5, authorupdate);
 
 					pstmt.execute();
@@ -172,14 +204,20 @@ public class AuthorInfo extends JFrame {
 				String name = txtAuthorName.getText();
 				String address = txtAuthorAddr.getText();
 				String phone = txtAuthorPhone.getText();
-				String employeeid = txtEmployeeName.getText();
+				//String employeeid = txtEmployeeName.getText();
+				//콤보박스에서 담당자 아이디 뽑아내기
+				int tmpid = cmbEmployeeName.getSelectedIndex();
+				Integer keys[] = mapub.keySet().toArray(new Integer[0]);
+				String employeeid = keys[tmpid].toString();
+				
 
 				try {
 					PreparedStatement pstmt = DBUtil.dbconn.prepareStatement(sql);
 					pstmt.setString(1, name);
 					pstmt.setString(2, address);
 					pstmt.setString(3, phone);
-					pstmt.setString(4, employeeid);
+					//pstmt.setString(4, employeeid);
+					pstmt.setInt(4, Integer.parseInt(employeeid));
 
 					pstmt.execute();
 					LoadTbl();
@@ -208,6 +246,7 @@ public class AuthorInfo extends JFrame {
 				authorupdate = Integer.parseInt(tblAuthor.getModel().getValueAt(row, 0).toString());
 
 				setTxtField(authorupdate);
+				
 			}
 		});
 		tblAuthor.setModel(new DefaultTableModel(
@@ -229,7 +268,8 @@ public class AuthorInfo extends JFrame {
 					txtAuthorName.setText("");
 					txtAuthorAddr.setText("");
 					txtAuthorPhone.setText("");
-					txtEmployeeName.setText("");
+					//txtEmployeeName.setText("");
+					cmbEmployeeName.setSelectedIndex(0);
 				} catch (SQLException edelete) {
 					JOptionPane.showMessageDialog(null, "삭제 오류 발생");
 					edelete.printStackTrace();
@@ -299,7 +339,7 @@ public class AuthorInfo extends JFrame {
 	}// end of LoadTbl()
 
 	private void setTxtField(int id) {
-		String sql = "SELECT a.authorid, a.name, a.address, a.phone, e.name FROM tblauthor as a INNER JOIN tblemployee as e ON a.employeeid = e.employeeid WHERE authorid = ?";
+		String sql = "SELECT a.authorid, a.name, a.address, a.phone, e.employeeid FROM tblauthor as a INNER JOIN tblemployee as e ON a.employeeid = e.employeeid WHERE authorid = ?";
 
 		try {
 			PreparedStatement pstmt = DBUtil.dbconn.prepareStatement(sql);
@@ -309,11 +349,34 @@ public class AuthorInfo extends JFrame {
 				txtAuthorName.setText(rs.getString(2));
 				txtAuthorAddr.setText(rs.getString(3));
 				txtAuthorPhone.setText(rs.getString(4));
-				txtEmployeeName.setText(rs.getString(5));
+				//txtEmployeeName.setText(rs.getString(5));
+				cmbEmployeeName.setSelectedIndex(rs.getInt(5)-1);//출판사아이디
+				cmbEmployeeName = this.cmbEmployeeName;
 			}
 		} catch (SQLException eset) {
 			JOptionPane.showMessageDialog(null, "해당 레코드 조회 오류 발생");
 			eset.printStackTrace();
 		}
 	}// end of setTxtField()
+	
+	private void fillList() {
+		// 데이터베이스 연결이 안되어 있으면 연결
+			if(DBUtil.dbconn == null) DBUtil.DBConnect();
+		String sql = "SELECT employeeid, name FROM tblemployee";
+		mapub = new HashMap<Integer, String>();
+		try {
+			PreparedStatement pstmt = DBUtil.dbconn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				mapub.put(rs.getInt(1),      // employeeid
+						  rs.getString(2)   // name
+						  );
+			}// end of while
+			rs.close();
+			pstmt.close();
+		}catch(SQLException eload) {
+			JOptionPane.showMessageDialog(null, "담당자 정보 처리 중 오류 발생");
+			//eload.printStackTrace();
+		}
+	}// end of fillList()
 }// end of class
