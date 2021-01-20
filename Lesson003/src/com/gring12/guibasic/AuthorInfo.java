@@ -351,7 +351,7 @@ public class AuthorInfo extends JFrame {
 				txtAuthorPhone.setText(rs.getString(4));
 				//txtEmployeeName.setText(rs.getString(5));
 				cmbEmployeeName.setSelectedIndex(rs.getInt(5)-1);//출판사아이디
-				cmbEmployeeName = this.cmbEmployeeName;
+				//cmbEmployeeName = this.cmbEmployeeName;
 			}
 		} catch (SQLException eset) {
 			JOptionPane.showMessageDialog(null, "해당 레코드 조회 오류 발생");
