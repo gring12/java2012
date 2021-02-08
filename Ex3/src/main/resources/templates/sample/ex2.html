@@ -5,6 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-    <h1 th:text="${'Hello'}">HELLO</h1>
+
+    <ul>
+        <li th:each="dto, state : ${list}">
+            [[${state.count}]] --- [[${dto}]]
+        </li>
+    </ul>
+
 </body>
 </html>
