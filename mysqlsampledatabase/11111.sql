@@ -104,15 +104,16 @@ firstName varchar(50),
 lastName varchar(50)
 );
 
-create table books(
+create table book(
 pno int primary key auto_increment,
 name varchar(100) not null,
 publisher varchar(100) not null,
+contents varchar(1000) not null,
 pday int not null,
 price int not null
 );
 
-insert into books (name, publisher, pday, price) values ('ANYBODY/형체의 논리', '현대건축사', 20060515, 27000);
+insert into books (name, publisher, contents, pday, price) values ('ANYBODY/형체의 논리', '현대건축사', '새로운 문화는 어떻게 만들어 지는가?', 20060515, 27000);
 
 create table review (
 rname varchar(100) not null,
@@ -122,6 +123,5 @@ contents varchar(200) not null
 
 insert into review (rname, rbook, contents) values ('punch', '공간이 만든 공간', '건축이 만든 공간, 공간이 남긴 여백, 여백이 주는 생각');
 
-select * from books;
+select * from book;
 select * from review;
-

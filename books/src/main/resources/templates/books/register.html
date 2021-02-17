@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+
+    <th:block th:fragment="content">
+        <h1 class="mt-4">Book Register Page</h1>
+
+        <form th:action="@{/book/register}" th:method="post">
+            <div class="form-group">
+                <label>Book Title</label>
+                <input type="text" class="form-control" name="name" placeholder="Enter Book Title">
+            </div>
+            <div class="form-group">
+                <label>Contents</label>
+                <textarea class="form-control" rows="5" name="contents"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Publisher</label>
+                <input type="text" class="form-control" name="publisher" placeholder="Enter Publisher">
+            </div>
+            <div class="form-group">
+                <label>Price</label>
+                <input type="text" class="form-control" name="price" placeholder="Enter Price">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+    </th:block> <!-- th:fragment="content" -->
+
+</th:block> <!-- th:replace -->
+
+</html>

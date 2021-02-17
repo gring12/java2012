@@ -3,20 +3,20 @@
 <!--[if IE 8]><html class="ie ie8 lte9 lte8" lang="UTF-8">	<![endif]-->
 <!--[if IE 9]><html class="ie ie9 lte9" lang="UTF-8"><![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!-->
-<html class="noIE" lang="UTF-8">
+<html class="noIE" lang="UTF-8" xmlns:th="http://www.thymeleaf.org">
 <!--<![endif]-->
 	<head>
 		<!-- meta -->
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no"/>
-		<title>Amazon eBook</title>
+		<title>MAIN</title>
 
-		<link rel="stylesheet" href="css/bootstrap.min.css">
-		<link rel="stylesheet" href="css/ionicons.min.css">
-		<link rel="stylesheet" href="css/owl.carousel.css">
-		<link rel="stylesheet" href="css/owl.theme.css">
-	    <link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" th:href="@{../css/bootstrap.min.css}">
+		<link rel="stylesheet" th:href="@{../css/ionicons.min.css}">
+		<link rel="stylesheet" th:href="@{../css/owl.carousel.css}">
+		<link rel="stylesheet" th:href="@{../css/owl.theme.css}">
+	    <link rel="stylesheet" th:href="@{../css/main.css}">
 
 	    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
@@ -44,8 +44,8 @@
 							<p class="description">
 								이 책은 건축을 중심으로 교류, 결합, 변종이 만들어 낸 문화의 진화를 이야기한다. 각 지역마다 지리적·기후적인 환경 제약이나 특징이 있고, 인간의 환경적 제약을 해결하려는 노력은 지역적 특성에 맞는 생활양식과 문화를 만들었다. 건축물은 그런 문화의 물리적 결정체다.
 							</p>
-							<a class="btn btn-default btn-lg bttn" href="../templates/book/book10.html" role="button">About The Book</a>
-							<a class="btn btn-default btn-lg red" href="../templates/book/list.html" role="button">another books</a>
+							<a class="btn btn-default btn-lg bttn" th:href="@{/book/read?pno=5&page=1}" role="button">About The Book</a>
+							<a class="btn btn-default btn-lg red" th:href="@{/book/list}" role="button">another books</a>
 						</div> <!-- /.header-wrapper -->
 					</div>	<!-- .col-sm-5 -->
 				</div> <!-- .row -->
@@ -68,7 +68,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a href="#index.html" class="logo navbar-brand">Amazon <span>e</span>Book</a>
+					<a th:href="@{#index.html}" class="logo navbar-brand">Yoo' <span>s&nbsp;&nbsp;</span>Home</a>
 				</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -97,16 +97,16 @@
 				<div class="row">
 					<div class="col-sm-6">
 						<h2 class="section">
-							About The Book
+							도시는 무엇으로 사는가
 						</h2>
 						<p class="light">
-							This lovely, well-written book is concerned foremost with creating typography and is essential for professionals who regularly work for clients.
+							작은 골목부터 뉴욕의 센트럴파크에 이르기까지,
 						</p>
 						<p class="body">
-							Ankkurissa seuratessa ai on et porstuasta en pirullisen. Ei ne ristiin paassyt he eikohain isomman tulossa uudesta. Nyt ota jattaa viinan edessa kai. <strong>Your Culture is your brand</strong> .Kuunnella ainaisena se kajuttaan ja asiakseen. Voi sylkea kay jos auttaa saalla nuo siella saukko sisaan. Kuin no koko ihan joka te mina he ne.
+							도시 속에 담겨 있는 정치, 경제, 문화, 역사, 과학을 읽어 내고, 도시와 인간의 삶이 서로 영향을 주면서 공진화하는 모습을 보여준다.
 						</p>
 						<p class="body">
-							uoksette ota vavahtaen jaa tee <strong>kaantynyt</strong> mimmoinen. Paahasi et talloin ja ne uusilla. Paljo milla uhria ja ja onkin. Jotakin on jo karille jaa tee kaanty ok done.
+							자신들이 만든 도시에 인간의 삶은 어떤 영향을 받는지, 과연 더 행복해지는지 아니면 피폐해지고 있는지를 인문학과 자연과학을 종횡무진하며 도시의 답변을 들려준다.
 						</p>
 					</div>
 				</div>
@@ -142,12 +142,12 @@
  		</div>
 	 		<div class="owl-carousel">
 	 			<div class="item">
-	 				<img src="images/Yeeak.png" alt="Yeeak" class="reviewer">
+	 				<img src="../images/people.jpg" alt="Yeeak" class="reviewer">
 	 				<h3>
-	 					Yeeak Lurbe
+	 					punch
 	 				</h3>
 	 				<p class="addr">
-	 					Los Angels, California
+	 					공간이 만든 공간
 	 				</p>
 	 				<div class="review-gain">
 	 					<i class="ion-star"></i>
@@ -157,16 +157,16 @@
 		 				<i class="ion-star"></i>
 	 				</div>
 	 				<p class="details">
-	 					Curabitur vel consectetur sapien. Cras volutpat non ex vitae maximus. ed at lobortis quam vel.
+	 					건축이 만든 공간, 공간이 남긴 여백, 여백이 주는 생각..
 	 				</p>
 	 			</div> <!-- /.item -->
 	 			<div class="item">
-	 				<img src="images/Juwel.png" alt="Juwel" class="reviewer">
+	 				<img src="../images/people.jpg" alt="Juwel" class="reviewer">
 	 				<h3>
-	 					Juwel Zohan
+	 					n****e
 	 				</h3>
 	 				<p class="addr">
-	 					Los Angels, California
+	 					도시는 무엇으로 사는가
 	 				</p>
 	 				<div class="review-gain">
 	 					<i class="ion-star"></i>
@@ -176,16 +176,16 @@
 		 				<i class="ion-star"></i>
 	 				</div>
 	 				<p class="details">
-	 					Curabitur vel consectetur sapien. Cras volutpat non ex vitae maximus. ed at lobortis quam vel.
+	 					건축에 대한 새로운 생각을 하게 되는 책입니다.
 	 				</p>
 	 			</div> <!-- /.item -->
 	 			<div class="item">
-	 				<img src="images/Rasakw.png" alt="Rasakw" class="reviewer">
+	 				<img src="../images/people.jpg" alt="Rasakw" class="reviewer">
 	 				<h3>
-	 					Raskw
+	 					lo**076
 	 				</h3>
 	 				<p class="addr">
-	 					Los Angels, California
+	 					어디서 살 것인가
 	 				</p>
 	 				<div class="review-gain">
 	 					<i class="ion-star"></i>
@@ -195,16 +195,16 @@
 		 				<i class="ion-ios-star-half"></i>
 	 				</div>
 	 				<p class="details">
-	 					Curabitur vel consectetur sapien. Cras volutpat non ex vitae maximus. ed at lobortis quam vel.
+	 					건축의 의미와 가치를 재밌게 쓴 책
 	 				</p>
 	 			</div> <!-- /.item -->
 	 			<div class="item">
-	 				<img src="images/Yeeak.png" alt="Yeeak" class="reviewer">
+	 				<img src="../images/people.jpg" alt="Yeeak" class="reviewer">
 	 				<h3>
-	 					Yeeak Lurbe
+	 					ddarulove
 	 				</h3>
 	 				<p class="addr">
-	 					Los Angels, California
+	 					모더니즘
 	 				</p>
 	 				<div class="review-gain">
 	 					<i class="ion-star"></i>
@@ -214,16 +214,16 @@
 		 				<i class="ion-star"></i>
 	 				</div>
 	 				<p class="details">
-	 					Curabitur vel consectetur sapien. Cras volutpat non ex vitae maximus. ed at lobortis quam vel.
+	 					우연히 발견한 보물같은 책
 	 				</p>
 	 			</div> <!-- /.item -->
 	 			<div class="item">
-	 				<img src="images/Juwel.png" alt="Juwel" class="reviewer">
+	 				<img src="../images/people.jpg" alt="Juwel" class="reviewer">
 	 				<h3>
-	 					Juwel Zohan
+	 					SPG
 	 				</h3>
 	 				<p class="addr">
-	 					Los Angels, California
+	 					도시는 무엇으로 사는가
 	 				</p>
 	 				<div class="review-gain">
 	 					<i class="ion-star"></i>
@@ -233,16 +233,16 @@
 		 				<i class="ion-star"></i>
 	 				</div>
 	 				<p class="details">
-	 					Curabitur vel consectetur sapien. Cras volutpat non ex vitae maximus. ed at lobortis quam vel.
+	 					골목과 마당이 있는 집을 꿈꾸게 한다
 	 				</p>
 	 			</div> <!-- /.item -->
 	 			<div class="item">
-	 				<img src="images/Rasakw.png" alt="Rasakw" class="reviewer">
+	 				<img src="../images/people.jpg" alt="Rasakw" class="reviewer">
 	 				<h3>
-	 					Raskw
+	 					chlalsgur01
 	 				</h3>
 	 				<p class="addr">
-	 					Los Angels, California
+	 					공간이 만든 공간
 	 				</p>
 	 				<div class="review-gain">
 	 					<i class="ion-star"></i>
@@ -252,7 +252,7 @@
 		 				<i class="ion-star"></i>
 	 				</div>
 	 				<p class="details">
-	 					Curabitur vel consectetur sapien. Cras volutpat non ex vitae maximus. ed at lobortis quam vel.
+	 					생각을 열어주는 책
 	 				</p>
 	 			</div> <!-- /.item -->
 	 		</div> <!-- /.owl-carousel -->
@@ -265,10 +265,10 @@
  		<div class="container">
  			<div class="row">
  				<div class="col-sm-8 blog-left">
- 					<img src="images/blogger.png" alt="blogger" class="blogger">
+ 					<img src="../images/yoo.png" alt="blogger" class="blogger">
  					<div class="blogger-id">
-	 					<div class="blogger-title">Mary Boast</div>
-	 					<div class="id">Typographer, Writer Coffee Addict...</div>
+	 					<div class="blogger-title">Yoo Hyun joon</div>
+	 					<div class="id">Architect, Writer, Professor...</div>
  					</div>
  					<p class="light">
  						Good typog­raphy is needed feebly dining oh talked wisdom oppose at. Applauded use attempted strangers concluded.
@@ -285,25 +285,25 @@
  						Stop by and meet the author
  					</p>
  					<p class="place">
- 						Italy National Book Fair, 2015
+ 						예술특강
  					</p>
  					<p class="book-icon">
- 						<i class="ion-calendar"></i> 06/02/15 <i class="ion-clock"></i> 8:30PM <i class="ion-android-compass"></i>
+ 						<i class="ion-calendar"></i> 03/03/2021 <i class="ion-clock"></i> 2:00PM <i class="ion-android-compass"></i>
  					</p>
  					<p class="place">
- 						Mumbai Writathon, 2015
+ 						경주예술의전당 화랑홀
  					</p>
  					<p class="book-icon">
  						<i class="ion-calendar"></i> 06/02/15 <i class="ion-clock"></i> 8:00PM <i class="ion-android-compass"></i>
  					</p>
  					<p class="light">
- 						<del>New York Expo 2015,</del>
+ 						<del>포스트 코로나 시대의 공간 북콘서트 2020,</del>
  					</p>
  					<p class="light">
- 						<del>Milan Book Fair 2015,</del>
+ 						<del>IFEZ 경관 아카데미 2020,</del>
  					</p>
  					<p class="light">
- 						<del>Paris Dreamhack 2014</del>
+ 						<del>우리가 사는 도시이야기 2019</del>
  					</p>
  				</div>
  			</div> <!-- /.row -->
@@ -407,12 +407,12 @@
 
 
 
-	<script src="js/jquery-1.11.2.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/contact.js"></script>
-	<script src="js/smoothscroll.js"></script>
-	<script src="js/script.js"></script>
+	<script src="../js/jquery-1.11.2.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/owl.carousel.min.js"></script>
+    <script src="../js/contact.js"></script>
+	<script src="../js/smoothscroll.js"></script>
+	<script src="../js/script.js"></script>
 
 
 

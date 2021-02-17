@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>BOARD - BOOKS</title>
+
     <style>
         * {
             margin : 0; /* 바깥 여백 */
@@ -127,7 +129,7 @@
 
         #contents > #section > #article {
             margin : 10px;
-            border : 1px solid black;
+            /* border : 1px solid black; */
         }
 
         #contents > #section > #article > table {
@@ -140,23 +142,23 @@
         }
 
         .board_head1 {
-            width : 50px;
+            width : 80px;
             text-align: center;
         }
         .board_head2 {
-            width : 390px;
+            width : 270px;
             text-align: center;
         }
         .board_head3 {
-            width : 110px;
-            text-align: center;
-        }
-        .board_head4 {
             width : 100px;
             text-align: center;
         }
+        .board_head4 {
+            width : 130px;
+            text-align: center;
+        }
         .board_head5 {
-            width : 70px;
+            width : 130px;
             text-align: center;
         }
 
@@ -193,11 +195,11 @@
 <div id="top_nav">
     <div id="main_gnb">
         <ul>
-            <li><a href="#">저서</a></li>
-            <li><a href="#">작가정보</a></li>
-            <li><a href="#">메뉴3</a></li>
-            <li><a href="#">메뉴4</a></li>
-            <li><a href="#">메뉴5</a></li>
+            <li><a th:href="@{/book/list}">BOOKS</a></li>
+            <li><a th:href="@{/review/list}">REVIEW</a></li>
+            <li><a th:href="@{#}">메뉴3</a></li>
+            <li><a th:href="@{#}">메뉴4</a></li>
+            <li><a th:href="@{#}">메뉴5</a></li>
         </ul>
     </div>
 </div>
@@ -207,104 +209,71 @@
 <div id="nav">
     <div id="main_lnb">
         <ul>
-            <li><a href="#">저서</a></li>
-            <li><a href="#">작가정보</a></li>
-            <li><a href="#">메뉴3</a></li>
-            <li><a href="#">메뉴4</a></li>
-            <li><a href="#">메뉴5</a></li>
+            <li><a th:href="@{/book/list}">BOOKS</a></li>
+            <li><a th:href="@{/review/list}">REVIEW</a></li>
+            <li><a th:href="@{#}">메뉴3</a></li>
+            <li><a th:href="@{#}">메뉴4</a></li>
+            <li><a th:href="@{#}">메뉴5</a></li>
         </ul>
     </div>
 </div>
 <div id="contents">
     <div id="aside">
-        <p class="leftmenu"><a href="#">저서</a></p>
-        <p class="leftmenu"><a href="#">작가 정보</a></p>
-        <p class="leftmenu"><a href="#">메뉴3</a></p>
-        <p class="leftmenu"><a href="#">메뉴4</a></p>
-        <p class="leftmenu"><a href="#">메뉴5</a></p>
+        <p class="leftmenu"><a th:href="@{/book/list}">BOOKS</a></p>
+        <p class="leftmenu"><a th:href="@{/review/list}">REVIEW</a></p>
+        <p class="leftmenu"><a th:href="@{#}">메뉴3</a></p>
+        <p class="leftmenu"><a th:href="@{#}">메뉴4</a></p>
+        <p class="leftmenu"><a th:href="@{#}">메뉴5</a></p>
     </div>
     <div id="section">
         <div id="article">
-            <p class="title">저서</p>
-            <table border="1">
+            <p class="title">BOOK LIST&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <!-- &nbsp; : 띄어쓰기 -->
+                <span>
+                    <a th:href="@{/book/register}">
+                        <button type="button" class="btn btn-outline-primary" style="float : right;">REGISTER</button>
+                    </a>
+                </span>
+            </p>
+            <table class ="table table-striped", border="1">
+
+                <thead>
                 <tr>
-                    <td class="board_head1">번호</td>
-                    <td class="board_head2">서명</td>
-                    <td class="board_head3">출판사</td>
-                    <td class="board_head4">출판일</td>
-                    <td class="board_head5">가격</td>
+                    <th scope="col" width="100px">#</th>
+                    <th scope="col" width="330px">Book Title</th>
+                    <th scope="col" width="130px">Publisher</th>
+                    <th scope="col" width="130px">Publish Day</th>
                 </tr>
-                <tr>
-                    <td class="board_contents1">10</td>
-                    <td class="board_contents2">공간이 만든 공간</td>
-                    <td class="board_contents3">을유문화사</td>
-                    <td class="board_contents4">20200430</td>
-                    <td class="board_contents5">16500</td>
+                </thead>
+                <tbody>
+
+                <tr th:each="book : ${result.dtoList}">
+                    <td th:value="@{book.pno}" th:align="center">[[${book.pno}]]</td>
+                    <td> <a th:href="@{/book/read(pno=${book.pno},page=${result.page})}">[[${book.name}]]</a></td>
+                    <td th:value="@{book.publisher}" th:align="center">[[${book.publisher}]]</td>
+                    <td th:value="@{book.pday}" th:align="center">[[${book.pday}]]</td>
                 </tr>
-                <tr>
-                    <td class="board_contents1">9</td>
-                    <td class="board_contents2">당신의 별자리는 무엇인가요</td>
-                    <td class="board_contents3">와이즈베리</td>
-                    <td class="board_contents4">20190226</td>
-                    <td class="board_contents5">15800</td>
-                </tr>
-                <tr>
-                    <td class="board_contents1">8</td>
-                    <td class="board_contents2">도시는 무엇으로 사는가</td>
-                    <td class="board_contents3">을유문화사</td>
-                    <td class="board_contents4">20181025</td>
-                    <td class="board_contents5">15000</td>
-                </tr>
-                <tr>
-                    <td class="board_contents1">7</td>
-                    <td class="board_contents2">어디서 살 것인가</td>
-                    <td class="board_contents3">을유문화사</td>
-                    <td class="board_contents4">20180530</td>
-                    <td class="board_contents5">16000</td>
-                </tr>
-                <tr>
-                    <td class="board_contents1">6</td>
-                    <td class="board_contents2">실패하지 않는 내집 짓기 (공저)</td>
-                    <td class="board_contents3">감씨</td>
-                    <td class="board_contents4">20180406</td>
-                    <td class="board_contents5">18000</td>
-                </tr>
-                <tr>
-                    <td class="board_contents1">5</td>
-                    <td class="board_contents2">도시는 무엇으로 사는가</td>
-                    <td class="board_contents3">을유문화사</td>
-                    <td class="board_contents4">20150325</td>
-                    <td class="board_contents5">15000</td>
-                </tr>
-                <tr>
-                    <td class="board_contents1">4</td>
-                    <td class="board_contents2">유현준 교수의 도시를 완성하는 73가지 건축이야기</td>
-                    <td class="board_contents3">미세움</td>
-                    <td class="board_contents4">20110710</td>
-                    <td class="board_contents5">17000</td>
-                </tr>
-                <tr>
-                    <td class="board_contents1">3</td>
-                    <td class="board_contents2">현대건축의 흐름</td>
-                    <td class="board_contents3">미세움</td>
-                    <td class="board_contents4">20091008</td>
-                    <td class="board_contents5">17000</td>
-                </tr>
-                <tr>
-                    <td class="board_contents1">2</td>
-                    <td class="board_contents2">모더니즘 동서양 문화의 하이브리드</td>
-                    <td class="board_contents3">미세움</td>
-                    <td class="board_contents4">20080415</td>
-                    <td class="board_contents5">12000</td>
-                </tr>
-                <tr>
-                    <td class="board_contents1">1</td>
-                    <td class="board_contents2">ANYBODY/형체의 논리 (역)</td>
-                    <td class="board_contents3">현대건축사</td>
-                    <td class="board_contents4">20060515</td>
-                    <td class="board_contents5">27000</td>
-                </tr>
+
+                </tbody>
+
             </table>
+            <p>
+                <!-- pagination -->
+            <ul class="pagination h-100 justify-content-center align-items-center">
+
+                <li class="page-item" th:if="${result.prev}">
+                    <a class="page-link" th:href="@{/book/list(page = ${result.start - 1})}" tabindex="-1">Previous</a>
+                </li>
+
+                <li th:class="'page-item' + ${result.page == page ? 'active':''}" th:each="page : ${result.pageList}">
+                    <a class="page-link" th:href="@{/book/list(page = ${page})}">[[${page}]]</a>
+                </li>
+
+                <li class="page-item" th:if="${result.next}">
+                    <a class="page-link" th:href="@{/book/list(page = ${result.end + 1})}">Next</a>
+                </li>
+
+            </ul>
+            </p>
         </div>
     </div>
 </div>
