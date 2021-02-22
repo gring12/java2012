@@ -70,6 +70,9 @@ public class BookServiceImpl implements BookService {
 
 			entity.changeName(dto.getName());
 			entity.changeContents(dto.getContents());
+			entity.changePublisher(dto.getPublisher());
+			entity.changePday(dto.getPday());
+			entity.changePrice(dto.getPrice());
 
 			repository.save(entity);
 		}

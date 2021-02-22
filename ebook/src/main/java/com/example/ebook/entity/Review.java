@@ -32,4 +32,6 @@ public class Review {
     public void changeContents(String rcontents){
         this.rcontents = rcontents;
     }
+
+    public void changeBook(String rbook) { this.rbook = rbook; }
 }

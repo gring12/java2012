@@ -46,4 +46,17 @@ public class Book {
 	public void changeContents(String contents){
 		this.contents = contents;
 	}
+
+	public void changePublisher(String publisher){
+		this.publisher = publisher;
+	}
+
+	public void changePday(int pday){
+		this.pday = pday;
+	}
+
+	public void changePrice(int price){
+		this.price = price;
+	}
+
 }

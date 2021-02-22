@@ -25,19 +25,19 @@
 /*=================================================
 ||				1. Imports 
 ==================================================*/
-@import url(http://fonts.googleapis.com/css?family=Roboto:100,400,700);
-@import url(http://fonts.googleapis.com/css?family=Roboto+Slab);
+@import url(https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700);
+@import url(http://fonts.googleapis.com/css2?family=Nanum+Brush+Script);
 
 body
 {
-	font-family: 'Roboto', 'Open-Sans', sans-serif;
+	font-family: 'Noto Sans KR', 'Nanum Brush Script', sans-serif;
 	overflow-x: hidden;
 	color: #313131;
 }
 h1.header-title
 {
 	font-weight: 700;
-	font-size: 40px;
+	font-size: 50px;
 	margin-bottom: 0px;
 }
 h2
@@ -132,7 +132,7 @@ p.header-sub
 ==================================================*/
 .logo
 {
-	font-family: 'Roboto Slab', serif;
+	font-family: 'Noto Sans KR', serif;
 	display: inline-block;
 	font-weight: 400;
 	font-size: 28px;
@@ -189,7 +189,7 @@ p.header-sub
 .light
 {
 	color: #999;
-	font-size: 24px;
+	font-size: 16px;
 	font-weight: 400;
 	line-height: 150%;
 	letter-spacing: 1px;
@@ -324,7 +324,7 @@ h3.title
 }
 .id, .place
 {
-	font-size: 24px;
+	font-size: 20px;
 	font-weight: 400;
 }
 .sub

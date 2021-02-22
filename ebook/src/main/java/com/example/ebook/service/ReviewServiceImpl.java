@@ -69,6 +69,7 @@ public class ReviewServiceImpl implements ReviewService {
 
             entity.changeName(dto.getRname());
             entity.changeContents(dto.getRcontents());
+            entity.changeBook(dto.getRbook());
 
             repository.save(entity);
         }
