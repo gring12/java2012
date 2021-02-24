@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BOARD - Details</title>
+    <title>BOARD - MODIFY</title>
     <style>
         * {
             margin : 0; /* 바깥 여백 */
@@ -191,9 +191,9 @@
 <div id="top_nav">
     <div id="main_gnb">
         <ul>
-            <li><a th:href="@{/book/}">MAIN</a></li>
-            <li><a th:href="@{/book/list}">BOOKS</a></li>
-            <li><a th:href="@{/review/list}">REVIEW</a></li>
+            <li><a th:href="@{/}">MAIN</a></li>
+            <li><a th:href="@{/list}">BOOKS</a></li>
+            <li><a th:href="@{/review/rlist}">REVIEW</a></li>
         </ul>
     </div>
 </div>
@@ -203,66 +203,54 @@
 <div id="nav">
     <div id="main_lnb">
         <ul>
-            <li><a th:href="@{/book/}">MAIN</a></li>
-            <li><a th:href="@{/book/list}">BOOKS</a></li>
-            <li><a th:href="@{/review/list}">REVIEW</a></li>
+            <li><a th:href="@{/}">MAIN</a></li>
+            <li><a th:href="@{/list}">BOOKS</a></li>
+            <li><a th:href="@{/review/rlist}">REVIEW</a></li>
         </ul>
     </div>
 </div>
 <div id="contents">
     <div id="aside">
-        <p class="leftmenu"><a th:href="@{/book/list}">BOOKS</a></p>
-        <p class="leftmenu"><a th:href="@{/review/list}">REVIEW</a></p>
+        <p class="leftmenu"><a th:href="@{/list}">BOOKS</a></p>
+        <p class="leftmenu"><a th:href="@{/review/rlist}">REVIEW</a></p>
     </div>
     <div id="section">
         <div id="article">
-            <p class="title">BOOKS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <!-- &nbsp; : 띄어쓰기 -->
+            <p class="title">REVIEW&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <!-- &nbsp; : 띄어쓰기 -->
 
             </p>
-            <form method="post" th:action="@{/book/remove(page=${pageDTO.page})}">
-                <!-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> : 입력하는 form이 있을 경우 form 안쪽에 보안 상의 이유로 csrf 설정 -->
+            <form method="post" th:action="@{/review/rmodify(rno=${dto.rno},page=${pageDTO.page})}">
+
                 <table border="1">
                     <tr>
                         <td class="board_inputA">#</td>
                         <td class="board_inputB">
-                            <input type="text" name="pno" th:value="${dto.pno}" readonly> <!-- readonly : read만 되게. 수정 불가함 -->
+                            <input type="text" name="rno" th:value="${dto.rno}" readonly> <!-- readonly : read만 되게. 수정 불가함 -->
                         </td>
                     </tr>
                     <tr>
                         <td class="board_inputA">Book Title</td>
                         <td class="board_inputB">
-                            <input type="text" name="name" th:value="${dto.name}" readonly>
+                            <input type="text" name="rbook" th:value="${dto.rbook}">
                         </td>
                     </tr>
                     <tr>
                         <td class="board_inputA">Contents</td>
                         <td class="board_inputB">
-                            <textarea name="contents" cols="65" rows="26" readonly>[[${dto.contents}]]</textarea>
+                            <textarea name="rcontents" cols="50" rows="12">[[${dto.rcontents}]]</textarea>
                         </td>
                     </tr>
                     <tr>
-                        <td class="board_inputA">Publisher</td>
+                        <td class="board_inputA">Reviewer</td>
                         <td class="board_inputB">
-                            <input type="text" name="publisher" th:value="${dto.publisher}" readonly>
+                            <input type="text" name="rname" th:value="${dto.rname}">
                         </td>
                     </tr>
-                    <tr>
-                        <td class="board_inputA">Publish Day</td>
-                        <td class="board_inputB">
-                            <input type="text" name="pday" th:value="${dto.pday}" readonly>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="board_inputA">Price</td>
-                        <td class="board_inputB">
-                            <input type="text" name="price" th:value="${dto.price}" readonly>
-                        </td>
-                    </tr>
+
                     <tr>
                         <td class="board_inputA" colspan="2">
-                            <a th:href="@{/book/list(page=${pageDTO.page})}"><button type="button" class="btn btn-info">&nbsp;LIST&nbsp;</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="submit" value="&nbsp;REMOVE&nbsp;">&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a th:href="@{/book/modify(pno=${dto.pno},page=${pageDTO.page})}"><button type="button" class="btn btn-primary">&nbsp;MODIFY&nbsp;</button></a>
+                            <a th:href="@{/review/rlist(page=${pageDTO.page})}"><button type="button" class="btn btn-info">&nbsp;LIST&nbsp;</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="submit" value="&nbsp;MODIFY&nbsp;">
                         </td>
                     </tr>
                 </table>

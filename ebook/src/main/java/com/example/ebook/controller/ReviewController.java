@@ -24,10 +24,10 @@ public class ReviewController {
     @GetMapping("/")
     public String index(){
         log.info("call index....");
-        return "book/index";
+        return "redirect:/review/rlist";
     }
 
-    @GetMapping("/list")
+    @GetMapping("/rlist")
     public void list(PageDTO pageDTO, Model model){
         log.info("list......." + pageDTO);
 
@@ -35,13 +35,13 @@ public class ReviewController {
 
     }
 
-    @GetMapping("/register")
+    @GetMapping("/rregister")
     public void register(){
 
         log.info("register get.....");
     }
 
-    @PostMapping("/register")
+    @PostMapping("/rregister")
     public String registerPost(ReviewDTO dto, RedirectAttributes redirectAttributes){
         log.info("dto..." + dto);
 
@@ -49,10 +49,10 @@ public class ReviewController {
 
         redirectAttributes.addFlashAttribute("msg", rno);
 
-        return "redirect:/review/list";
+        return "redirect:/review/rlist";
     }
 
-    @GetMapping({"/read", "/modify"})
+    @GetMapping({"/rread", "/rmodify"})
     public void read(int rno, @ModelAttribute("pageDTO") PageDTO pageDTO, Model model){
         log.info("rno : " + rno);
 
@@ -61,7 +61,7 @@ public class ReviewController {
         model.addAttribute("dto", dto);
     }
 
-    @PostMapping("/remove")
+    @PostMapping("/rremove")
     public String remove(int rno, RedirectAttributes redirectAttributes){
         log.info("rno : " + rno);
 
@@ -69,10 +69,10 @@ public class ReviewController {
 
         redirectAttributes.addFlashAttribute("msg", rno);
 
-        return "redirect:/review/list";
+        return "redirect:/review/rlist";
     }
 
-    @PostMapping("/modify")
+    @PostMapping("/rmodify")
     public String modify(ReviewDTO dto, @ModelAttribute("pageDTO") PageDTO pageDTO, RedirectAttributes redirectAttributes){
         log.info("post modify.....................");
         log.info("dto : " + dto);
@@ -82,6 +82,6 @@ public class ReviewController {
         redirectAttributes.addAttribute("page", pageDTO.getPage());
         redirectAttributes.addAttribute("rno", dto.getRno());
 
-        return "redirect:/review/read";
+        return "redirect:/review/rread";
     }
 }

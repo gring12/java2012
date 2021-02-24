@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/book")
+@RequestMapping("/")
 @Log4j2
 @RequiredArgsConstructor
 public class BookController {
@@ -25,7 +25,7 @@ public class BookController {
     @GetMapping("/")
     public String index(){
         log.info("call index....");
-        return "book/index";
+        return "/index";
     }
 
     @GetMapping("/list")
@@ -50,7 +50,7 @@ public class BookController {
 
         redirectAttributes.addFlashAttribute("msg", pno);
 
-        return "redirect:/book/list";
+        return "redirect:/list";
     }
 
     @GetMapping({"/read", "/modify"})
@@ -70,7 +70,7 @@ public class BookController {
 
         redirectAttributes.addFlashAttribute("msg", pno);
 
-        return "redirect:/book/list";
+        return "redirect:/list";
     }
 
     @PostMapping("/modify")
@@ -83,6 +83,6 @@ public class BookController {
         redirectAttributes.addAttribute("page", pageDTO.getPage());
         redirectAttributes.addAttribute("pno", dto.getPno());
 
-        return "redirect:/book/read";
+        return "redirect:/read";
     }
 }

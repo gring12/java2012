@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BOARD - REVIEW</title>
-
+    <title>BOARD - Details</title>
     <style>
         * {
             margin : 0; /* 바깥 여백 */
@@ -129,10 +127,10 @@
 
         #contents > #section > #article {
             margin : 10px;
-            /* border : 1px solid black; */
+           /* border : 1px solid black; */
         }
 
-        #contents > #section > #article > table {
+        table {
             /* border : 1px solid black; */
             border-collapse: collapse; /* 선이 겹칠 경우 한개로 정리 */
         }
@@ -162,19 +160,17 @@
             text-align: center;
         }
 
-        .board_contents1 {
-            text-align: center;
-        }
-        .board_contents3 {
-            text-align: center;
-        }
-        .board_contents4 {
-            text-align: center;
-        }
-        .board_contents5 {
-            text-align: center;
-        }
-
+        /* 입력 폼 디자인 */
+		.board_inputA {
+			width : 150px;
+			height : 30px;
+			text-align : center;
+		}
+		.board_inputB {
+			width : 500px;
+			height : 30px;
+			text-align : left;
+		}
 
 
         #footer {
@@ -195,9 +191,9 @@
 <div id="top_nav">
     <div id="main_gnb">
         <ul>
-            <li><a th:href="@{/book/}">MAIN</a></li>
-            <li><a th:href="@{/book/list}">BOOKS</a></li>
-            <li><a th:href="@{/review/list}">REVIEW</a></li>
+            <li><a th:href="@{/}">MAIN</a></li>
+            <li><a th:href="@{/list}">BOOKS</a></li>
+            <li><a th:href="@{/review/rlist}">REVIEW</a></li>
         </ul>
     </div>
 </div>
@@ -207,66 +203,59 @@
 <div id="nav">
     <div id="main_lnb">
         <ul>
-            <li><a th:href="@{/book/}">MAIN</a></li>
-            <li><a th:href="@{/book/list}">BOOKS</a></li>
-            <li><a th:href="@{/review/list}">REVIEW</a></li>
+            <li><a th:href="@{/}">MAIN</a></li>
+            <li><a th:href="@{/list}">BOOKS</a></li>
+            <li><a th:href="@{/review/rlist}">REVIEW</a></li>
         </ul>
     </div>
 </div>
 <div id="contents">
     <div id="aside">
-        <p class="leftmenu"><a th:href="@{/book/list}">BOOKS</a></p>
-        <p class="leftmenu"><a th:href="@{/review/list}">REVIEW</a></p>
+        <p class="leftmenu"><a th:href="@{/list}">BOOKS</a></p>
+        <p class="leftmenu"><a th:href="@{/review/rlist}">REVIEW</a></p>
     </div>
     <div id="section">
         <div id="article">
-            <p class="title">REVIEW LIST&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <!-- &nbsp; : 띄어쓰기 -->
-                <span>
-                    <a th:href="@{/review/register}">
-                        <button type="button" class="btn btn-outline-primary" style="float : right;">&nbsp;REGISTER&nbsp;</button>
-                    </a>
-                </span>
+            <p class="title">REVIEW&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <!-- &nbsp; : 띄어쓰기 -->
+
             </p>
-            <table class ="table table-striped", border="1">
+            <form method="post" th:action="@{/review/rremove(page=${pageDTO.page})}">
+                <!-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> : 입력하는 form이 있을 경우 form 안쪽에 보안 상의 이유로 csrf 설정 -->
+                <table border="1">
+                    <tr>
+                        <td class="board_inputA">#</td>
+                        <td class="board_inputB">
+                            <input type="text" name="rno" th:value="${dto.rno}" readonly> <!-- readonly : read만 되게. 수정 불가함 -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="board_inputA">Book Title</td>
+                        <td class="board_inputB">
+                            <input type="text" name="rbook" th:value="${dto.rbook}" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="board_inputA">Contents</td>
+                        <td class="board_inputB">
+                            <textarea name="rcontents" cols="65" rows="26" readonly>[[${dto.rcontents}]]</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="board_inputA">Reviewer</td>
+                        <td class="board_inputB">
+                            <input type="text" name="rname" th:value="${dto.rname}" readonly>
+                        </td>
+                    </tr>
 
-                <thead>
-                <tr>
-                    <th scope="col" width="100px">#</th>
-                    <th scope="col" width="330px">Contents</th>
-                    <th scope="col" width="130px">Book Name</th>
-                    <th scope="col" width="130px">Reviewer</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                <tr th:each="review : ${result.dtoList}">
-                    <td th:align="center"><a th:href="@{/review/read(rno=${review.rno},page=${result.page})}">[[${review.rno}]]</a></td>
-                    <td th:value="@{review.rcontents}">[[${review.rcontents}]]</td>
-                    <td th:value="@{review.rbook}" th:align="center">[[${review.rbook}]]</td>
-                    <td th:value="@{review.rname}" th:align="center">[[${review.rname}]]</td>
-                </tr>
-
-                </tbody>
-
-            </table>
-            <p>
-                <!-- pagination -->
-            <ul class="pagination h-100 justify-content-center align-items-center">
-
-                <li class="page-item" th:if="${result.prev}">
-                    <a class="page-link" th:href="@{/review/list(page = ${result.start - 1})}" tabindex="-1">Previous</a>
-                </li>
-
-                <li th:class="'page-item' + ${result.page == page ? 'active':''}" th:each="page : ${result.pageList}">
-                    <a class="page-link" th:href="@{/review/list(page = ${page})}">[[${page}]]</a>
-                </li>
-
-                <li class="page-item" th:if="${result.next}">
-                    <a class="page-link" th:href="@{/review/list(page = ${result.end + 1})}">Next</a>
-                </li>
-
-            </ul>
-            </p>
+                    <tr>
+                        <td class="board_inputA" colspan="2">
+                            <a th:href="@{/review/rlist(page=${pageDTO.page})}"><button type="button" class="btn btn-info">&nbsp;LIST&nbsp;</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="submit" value="&nbsp;REMOVE&nbsp;">&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a th:href="@{/review/rmodify(rno=${dto.rno},page=${pageDTO.page})}"><button type="button" class="btn btn-primary">&nbsp;MODIFY&nbsp;</button></a>
+                        </td>
+                    </tr>
+                </table>
+            </form>
         </div>
     </div>
 </div>

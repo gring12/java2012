@@ -191,9 +191,9 @@
 <div id="top_nav">
     <div id="main_gnb">
         <ul>
-            <li><a th:href="@{/book/}">MAIN</a></li>
-            <li><a th:href="@{/book/list}">BOOKS</a></li>
-            <li><a th:href="@{/review/list}">REVIEW</a></li>
+            <li><a th:href="@{/}">MAIN</a></li>
+            <li><a th:href="@{/list}">BOOKS</a></li>
+            <li><a th:href="@{/review/rlist}">REVIEW</a></li>
         </ul>
     </div>
 </div>
@@ -203,16 +203,16 @@
 <div id="nav">
     <div id="main_lnb">
         <ul>
-            <li><a th:href="@{/book/}">MAIN</a></li>
-            <li><a th:href="@{/book/list}">BOOKS</a></li>
-            <li><a th:href="@{/review/list}">REVIEW</a></li>
+            <li><a th:href="@{/}">MAIN</a></li>
+            <li><a th:href="@{/list}">BOOKS</a></li>
+            <li><a th:href="@{/review/rlist}">REVIEW</a></li>
         </ul>
     </div>
 </div>
 <div id="contents">
     <div id="aside">
-        <p class="leftmenu"><a th:href="@{/book/list}">BOOKS</a></p>
-        <p class="leftmenu"><a th:href="@{/review/list}">REVIEW</a></p>
+        <p class="leftmenu"><a th:href="@{/list}">BOOKS</a></p>
+        <p class="leftmenu"><a th:href="@{/review/rlist}">REVIEW</a></p>
     </div>
     <div id="section">
         <div id="article">
@@ -256,7 +256,7 @@
                         <td class="board_inputA" colspan="2">
                             <input type="submit" value="&nbsp;REGISTER&nbsp;">
                             <!--<a th:href="@{/book/list(page=${pageDTO.page})}"><button type="button" class="btn btn-info">LIST</button></a>-->
-                            <a th:href="@{/book/list}"><button type="button" class="btn btn-info">&nbsp;LIST&nbsp;</button></a>
+                            <a th:href="@{/list}"><button type="button" class="btn btn-info">&nbsp;LIST&nbsp;</button></a>
                         </td>
                     </tr>
                 </table>
